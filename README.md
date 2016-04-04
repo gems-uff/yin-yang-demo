@@ -40,10 +40,20 @@ Finally, NW+YW connects variable names and values captured by NW with the code b
 
 ### Additional Queries
 
-**What source files were YW annotations extracted from?**
+**EQ1 - What source files were YW annotations extracted from?**
 
 System | Query | Answer
 -------| ------| --------------
 NW     | `eq1(SourceFile) :- trial(_, _, _ , SourceFile, _, _, _, _, _, _).` | simulate_data_collection.py
 YW     | `eq1(SourceFile) :- extract_source(_, SourceFile).`                 | ../simulate_data_collection.py
-NW+YW  | 
+NW+YW  |                                                                     |
+
+**EQ2 - What are the names of all program blocks in the script?**
+
+This query uses the term blocks, that refer to YW annotations. Since noWorkflow is not aware of annotation blocks, it interprets this query as "What are the names of the user-defined functions that are in the script?". 
+
+System | Query | Answer
+-------| ------| --------------
+NW     | `eq2(ProgramName) :- function_def(_, _, ProgramName, _, _, _, _).`  | simulate_data_collection.py
+YW     | `eq2(ProgramName) :- annotation(_, _, _, 'begin', _, ProgramName).` | transform_images,                                        calculate_strategy, simulate_data_collection, load_screening_results, log_rejected_sample, collect_next_image, transform_image, log_average_image_intensity, initialize_run, collect_data_set
+NW+YW  |                                                                      | 
