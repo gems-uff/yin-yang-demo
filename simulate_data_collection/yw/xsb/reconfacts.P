@@ -1,0 +1,137 @@
+
+% FACT: resource(resource_id, resource_uri).
+resource(1, 'cassette_q55_spreadsheet.csv').
+resource(2, 'calibration.img').
+resource(3, 'run/data/DRT240/DRT240_10000eV_001.img').
+resource(4, 'run/data/DRT240/DRT240_10000eV_002.img').
+resource(5, 'run/data/DRT240/DRT240_11000eV_001.img').
+resource(6, 'run/data/DRT240/DRT240_11000eV_002.img').
+resource(7, 'run/data/DRT240/DRT240_12000eV_001.img').
+resource(8, 'run/data/DRT322/DRT322_10000eV_001.img').
+resource(9, 'run/data/DRT322/DRT322_10000eV_002.img').
+resource(10, 'run/data/DRT322/DRT322_11000eV_001.img').
+resource(11, 'run/data/DRT322/DRT322_11000eV_002.img').
+resource(12, 'run/run_log.txt').
+resource(13, 'run/collected_images.csv').
+resource(14, 'run/rejected_samples.txt').
+resource(15, 'run/raw/q55/DRT240/e10000/image_001.raw').
+resource(16, 'run/raw/q55/DRT240/e10000/image_002.raw').
+resource(17, 'run/raw/q55/DRT240/e11000/image_001.raw').
+resource(18, 'run/raw/q55/DRT240/e11000/image_002.raw').
+resource(19, 'run/raw/q55/DRT240/e12000/image_001.raw').
+resource(20, 'run/raw/q55/DRT240/e12000/image_002.raw').
+resource(21, 'run/raw/q55/DRT322/e10000/image_001.raw').
+resource(22, 'run/raw/q55/DRT322/e10000/image_002.raw').
+resource(23, 'run/raw/q55/DRT322/e11000/image_001.raw').
+resource(24, 'run/raw/q55/DRT322/e11000/image_002.raw').
+
+% FACT: data_resource(data_id, resource_id).
+data_resource(4, 1).
+data_resource(5, 2).
+data_resource(6, 3).
+data_resource(6, 4).
+data_resource(6, 5).
+data_resource(6, 6).
+data_resource(6, 7).
+data_resource(6, 8).
+data_resource(6, 9).
+data_resource(6, 10).
+data_resource(6, 11).
+data_resource(7, 12).
+data_resource(8, 13).
+data_resource(9, 14).
+data_resource(10, 12).
+data_resource(12, 1).
+data_resource(21, 14).
+data_resource(25, 15).
+data_resource(25, 16).
+data_resource(25, 17).
+data_resource(25, 18).
+data_resource(25, 19).
+data_resource(25, 20).
+data_resource(25, 21).
+data_resource(25, 22).
+data_resource(25, 23).
+data_resource(25, 24).
+data_resource(26, 2).
+data_resource(27, 3).
+data_resource(27, 4).
+data_resource(27, 5).
+data_resource(27, 6).
+data_resource(27, 7).
+data_resource(27, 8).
+data_resource(27, 9).
+data_resource(27, 10).
+data_resource(27, 11).
+data_resource(31, 13).
+
+% FACT: uri_variable_value(resource_id, uri_variable_id, uri_variable_value).
+uri_variable_value(1, 1, 'q55').
+uri_variable_value(1, 2, 'q55').
+uri_variable_value(15, 3, 'q55').
+uri_variable_value(15, 4, 'DRT240').
+uri_variable_value(15, 5, '10000').
+uri_variable_value(15, 6, '001').
+uri_variable_value(16, 3, 'q55').
+uri_variable_value(16, 4, 'DRT240').
+uri_variable_value(16, 5, '10000').
+uri_variable_value(16, 6, '002').
+uri_variable_value(17, 3, 'q55').
+uri_variable_value(17, 4, 'DRT240').
+uri_variable_value(17, 5, '11000').
+uri_variable_value(17, 6, '001').
+uri_variable_value(18, 3, 'q55').
+uri_variable_value(18, 4, 'DRT240').
+uri_variable_value(18, 5, '11000').
+uri_variable_value(18, 6, '002').
+uri_variable_value(19, 3, 'q55').
+uri_variable_value(19, 4, 'DRT240').
+uri_variable_value(19, 5, '12000').
+uri_variable_value(19, 6, '001').
+uri_variable_value(20, 3, 'q55').
+uri_variable_value(20, 4, 'DRT240').
+uri_variable_value(20, 5, '12000').
+uri_variable_value(20, 6, '002').
+uri_variable_value(21, 3, 'q55').
+uri_variable_value(21, 4, 'DRT322').
+uri_variable_value(21, 5, '10000').
+uri_variable_value(21, 6, '001').
+uri_variable_value(22, 3, 'q55').
+uri_variable_value(22, 4, 'DRT322').
+uri_variable_value(22, 5, '10000').
+uri_variable_value(22, 6, '002').
+uri_variable_value(23, 3, 'q55').
+uri_variable_value(23, 4, 'DRT322').
+uri_variable_value(23, 5, '11000').
+uri_variable_value(23, 6, '001').
+uri_variable_value(24, 3, 'q55').
+uri_variable_value(24, 4, 'DRT322').
+uri_variable_value(24, 5, '11000').
+uri_variable_value(24, 6, '002').
+uri_variable_value(3, 7, 'DRT240').
+uri_variable_value(3, 8, '10000').
+uri_variable_value(3, 9, '001').
+uri_variable_value(4, 7, 'DRT240').
+uri_variable_value(4, 8, '10000').
+uri_variable_value(4, 9, '002').
+uri_variable_value(5, 7, 'DRT240').
+uri_variable_value(5, 8, '11000').
+uri_variable_value(5, 9, '001').
+uri_variable_value(6, 7, 'DRT240').
+uri_variable_value(6, 8, '11000').
+uri_variable_value(6, 9, '002').
+uri_variable_value(7, 7, 'DRT240').
+uri_variable_value(7, 8, '12000').
+uri_variable_value(7, 9, '001').
+uri_variable_value(8, 7, 'DRT322').
+uri_variable_value(8, 8, '10000').
+uri_variable_value(8, 9, '001').
+uri_variable_value(9, 7, 'DRT322').
+uri_variable_value(9, 8, '10000').
+uri_variable_value(9, 9, '002').
+uri_variable_value(10, 7, 'DRT322').
+uri_variable_value(10, 8, '11000').
+uri_variable_value(10, 9, '001').
+uri_variable_value(11, 7, 'DRT322').
+uri_variable_value(11, 8, '11000').
+uri_variable_value(11, 9, '002').
