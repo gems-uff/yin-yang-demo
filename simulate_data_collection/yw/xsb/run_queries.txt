@@ -38,7 +38,6 @@ yes
 ---------------------------------------------------------------------------------------------------------------------------
 eq2(ProgramName) - What are the names N of all program blocks?
 ---------------------------------------------------------------------------------------------------------------------------
-eq2(collect_data_set)
 eq2(transform_images)
 eq2(calculate_strategy)
 eq2(simulate_data_collection)
@@ -48,13 +47,13 @@ eq2(collect_next_image)
 eq2(transform_image)
 eq2(log_average_image_intensity)
 eq2(initialize_run)
+eq2(collect_data_set)
 
 yes
 | ?- 
 ---------------------------------------------------------------------------------------------------------------------------
 eq3(PortName) - What out ports are qualified with URIs?
 ---------------------------------------------------------------------------------------------------------------------------
-eq3(corrected_image_path)
 eq3(raw_image_path)
 eq3(rejection_log)
 eq3(collection_log)
@@ -190,6 +189,7 @@ mq15(DownstreamDataName) - What data is immediately downstream of raw_image?
 ---------------------------------------------------------------------------------------------------------------------------
 mq15(pixel_count)
 mq15(total_intensity)
+mq15(corrected_image_path)
 mq15(corrected_image)
 
 yes
@@ -207,29 +207,30 @@ yes
 ---------------------------------------------------------------------------------------------------------------------------
 mq17(DownstreamDataName) - What data is downstream of accepted_sample?
 ---------------------------------------------------------------------------------------------------------------------------
-mq17(pixel_count)
-mq17(total_intensity)
-mq17(raw_image)
-mq17(frame_number)
 mq17(energy)
+mq17(total_intensity)
+mq17(pixel_count)
+mq17(frame_number)
 mq17(sample_id)
-mq17(collection_log)
 mq17(corrected_image)
+mq17(collection_log)
+mq17(raw_image)
+mq17(corrected_image_path)
 
 yes
 | ?- 
 ---------------------------------------------------------------------------------------------------------------------------
 mq18(UpstreamDataName) - What data is upstream of raw_image?
 ---------------------------------------------------------------------------------------------------------------------------
-mq18(sample_spreadsheet)
-mq18(sample_quality)
-mq18(data_redundancy)
-mq18(num_images)
-mq18(cassette_id)
 mq18(energies)
 mq18(sample_score_cutoff)
 mq18(accepted_sample)
 mq18(sample_name)
+mq18(sample_spreadsheet)
+mq18(cassette_id)
+mq18(sample_quality)
+mq18(data_redundancy)
+mq18(num_images)
 
 yes
 | ?- 
@@ -298,4 +299,4 @@ rq5(q55)
 
 yes
 | ?- 
-End XSB (cputime 0.02 secs, elapsetime 0.04 secs)
+End XSB (cputime 0.02 secs, elapsetime 0.02 secs)

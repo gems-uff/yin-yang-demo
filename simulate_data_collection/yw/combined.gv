@@ -51,6 +51,7 @@ energies
 sample_id
 energy
 frame_number
+corrected_image_path
 total_intensity
 pixel_count
 
@@ -80,6 +81,7 @@ num_images -> collect_data_set
 accepted_sample -> collect_data_set
 energies -> collect_data_set
 transform_images -> corrected_image
+transform_images -> corrected_image_path
 transform_images -> total_intensity
 transform_images -> pixel_count
 sample_id -> transform_images
@@ -91,7 +93,7 @@ log_average_image_intensity -> collection_log
 cassette_id -> log_average_image_intensity
 sample_id -> log_average_image_intensity
 frame_number -> log_average_image_intensity
-corrected_image -> log_average_image_intensity
+corrected_image_path -> log_average_image_intensity
 total_intensity -> log_average_image_intensity
 pixel_count -> log_average_image_intensity
 

@@ -27,7 +27,7 @@ from datetime import datetime
 """
 
 def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
-    
+
     """
     @begin initialize_run @desc Create run directory and initialize log files.
     @out run_log  @uri file:run/run_log.txt
@@ -120,7 +120,8 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
                 @param frame_number
                 @in raw_image_path @as raw_image
                 @in calibration_image @uri file:calibration.img
-                @out corrected_image_path @as corrected_image @uri file:run/data/{sample_id}/{sample_id}_{energy}eV_{frame_number}.img
+                @out corrected_image @uri file:run/data/{sample_id}/{sample_id}_{energy}eV_{frame_number}.img
+                @out corrected_image_path
                 @out total_intensity
                 @out pixel_count
                 """
@@ -136,7 +137,7 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
                 @param cassette_id
                 @param sample_id
                 @param frame_number
-                @param corrected_image_path @as corrected_image
+                @param corrected_image_path
                 @param total_intensity
                 @param pixel_count
                 @out collection_log @uri file:run/collected_images.csv

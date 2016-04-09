@@ -85,53 +85,52 @@ annotation(79, 1, 121, 'in', '@in', 'raw_image_path').
 annotation(80, 1, 121, 'as', '@as', 'raw_image').
 annotation(81, 1, 122, 'in', '@in', 'calibration_image').
 annotation(82, 1, 122, 'uri', '@uri', 'file:calibration.img').
-annotation(83, 1, 123, 'out', '@out', 'corrected_image_path').
-annotation(84, 1, 123, 'as', '@as', 'corrected_image').
-annotation(85, 1, 123, 'uri', '@uri', 'file:run/data/{sample_id}/{sample_id}_{energy}eV_{frame_number}.img').
-annotation(86, 1, 124, 'out', '@out', 'total_intensity').
-annotation(87, 1, 125, 'out', '@out', 'pixel_count').
-annotation(88, 1, 131, 'end', '@end', 'transform_images').
-annotation(89, 1, 135, 'begin', '@begin', 'log_average_image_intensity').
-annotation(90, 1, 135, 'desc', '@desc', 'Record statistics about each diffraction image.').
-annotation(91, 1, 136, 'param', '@param', 'cassette_id').
-annotation(92, 1, 137, 'param', '@param', 'sample_id').
-annotation(93, 1, 138, 'param', '@param', 'frame_number').
-annotation(94, 1, 139, 'param', '@param', 'corrected_image_path').
-annotation(95, 1, 139, 'as', '@as', 'corrected_image').
-annotation(96, 1, 140, 'param', '@param', 'total_intensity').
-annotation(97, 1, 141, 'param', '@param', 'pixel_count').
-annotation(98, 1, 142, 'out', '@out', 'collection_log').
-annotation(99, 1, 142, 'uri', '@uri', 'file:run/collected_images.csv').
-annotation(100, 1, 149, 'end', '@end', 'log_average_image_intensity').
-annotation(101, 1, 153, 'end', '@end', 'simulate_data_collection').
-annotation(102, 1, 157, 'begin', '@begin', 'calculate_strategy').
-annotation(103, 1, 158, 'param', '@param', 'sample_name').
-annotation(104, 1, 159, 'param', '@param', 'sample_quality').
-annotation(105, 1, 160, 'param', '@param', 'sample_score_cutoff').
-annotation(106, 1, 161, 'param', '@param', 'data_redundancy').
-annotation(107, 1, 162, 'return', '@return', 'accepted_sample').
-annotation(108, 1, 163, 'return', '@return', 'rejected_sample').
-annotation(109, 1, 164, 'return', '@return', 'num_images').
-annotation(110, 1, 165, 'return', '@return', 'energies').
-annotation(111, 1, 181, 'end', '@end', 'calculate_strategy').
-annotation(112, 1, 185, 'begin', '@begin', 'collect_next_image').
-annotation(113, 1, 186, 'param', '@param', 'cassette_id').
-annotation(114, 1, 187, 'param', '@param', 'sample_id').
-annotation(115, 1, 188, 'param', '@param', 'num_images').
-annotation(116, 1, 189, 'param', '@param', 'energies').
-annotation(117, 1, 190, 'param', '@param', 'image_path_template').
-annotation(118, 1, 191, 'return', '@return', 'energy').
-annotation(119, 1, 192, 'return', '@return', 'frame_number').
-annotation(120, 1, 193, 'return', '@return', 'intensity').
-annotation(121, 1, 194, 'return', '@return', 'raw_image_path').
-annotation(122, 1, 205, 'end', '@end', 'collect_next_image').
-annotation(123, 1, 209, 'begin', '@begin', 'transform_image').
-annotation(124, 1, 210, 'param', '@param', 'raw_image_path').
-annotation(125, 1, 211, 'param', '@param', 'corrected_image_path').
-annotation(126, 1, 212, 'param', '@param', 'calibration_image_path').
-annotation(127, 1, 213, 'return', '@return', 'total_intensity').
-annotation(128, 1, 214, 'return', '@return', 'pixel_count').
-annotation(129, 1, 233, 'end', '@end', 'transform_image').
+annotation(83, 1, 123, 'out', '@out', 'corrected_image').
+annotation(84, 1, 123, 'uri', '@uri', 'file:run/data/{sample_id}/{sample_id}_{energy}eV_{frame_number}.img').
+annotation(85, 1, 124, 'out', '@out', 'corrected_image_path').
+annotation(86, 1, 125, 'out', '@out', 'total_intensity').
+annotation(87, 1, 126, 'out', '@out', 'pixel_count').
+annotation(88, 1, 132, 'end', '@end', 'transform_images').
+annotation(89, 1, 136, 'begin', '@begin', 'log_average_image_intensity').
+annotation(90, 1, 136, 'desc', '@desc', 'Record statistics about each diffraction image.').
+annotation(91, 1, 137, 'param', '@param', 'cassette_id').
+annotation(92, 1, 138, 'param', '@param', 'sample_id').
+annotation(93, 1, 139, 'param', '@param', 'frame_number').
+annotation(94, 1, 140, 'param', '@param', 'corrected_image_path').
+annotation(95, 1, 141, 'param', '@param', 'total_intensity').
+annotation(96, 1, 142, 'param', '@param', 'pixel_count').
+annotation(97, 1, 143, 'out', '@out', 'collection_log').
+annotation(98, 1, 143, 'uri', '@uri', 'file:run/collected_images.csv').
+annotation(99, 1, 150, 'end', '@end', 'log_average_image_intensity').
+annotation(100, 1, 154, 'end', '@end', 'simulate_data_collection').
+annotation(101, 1, 158, 'begin', '@begin', 'calculate_strategy').
+annotation(102, 1, 159, 'param', '@param', 'sample_name').
+annotation(103, 1, 160, 'param', '@param', 'sample_quality').
+annotation(104, 1, 161, 'param', '@param', 'sample_score_cutoff').
+annotation(105, 1, 162, 'param', '@param', 'data_redundancy').
+annotation(106, 1, 163, 'return', '@return', 'accepted_sample').
+annotation(107, 1, 164, 'return', '@return', 'rejected_sample').
+annotation(108, 1, 165, 'return', '@return', 'num_images').
+annotation(109, 1, 166, 'return', '@return', 'energies').
+annotation(110, 1, 182, 'end', '@end', 'calculate_strategy').
+annotation(111, 1, 186, 'begin', '@begin', 'collect_next_image').
+annotation(112, 1, 187, 'param', '@param', 'cassette_id').
+annotation(113, 1, 188, 'param', '@param', 'sample_id').
+annotation(114, 1, 189, 'param', '@param', 'num_images').
+annotation(115, 1, 190, 'param', '@param', 'energies').
+annotation(116, 1, 191, 'param', '@param', 'image_path_template').
+annotation(117, 1, 192, 'return', '@return', 'energy').
+annotation(118, 1, 193, 'return', '@return', 'frame_number').
+annotation(119, 1, 194, 'return', '@return', 'intensity').
+annotation(120, 1, 195, 'return', '@return', 'raw_image_path').
+annotation(121, 1, 206, 'end', '@end', 'collect_next_image').
+annotation(122, 1, 210, 'begin', '@begin', 'transform_image').
+annotation(123, 1, 211, 'param', '@param', 'raw_image_path').
+annotation(124, 1, 212, 'param', '@param', 'corrected_image_path').
+annotation(125, 1, 213, 'param', '@param', 'calibration_image_path').
+annotation(126, 1, 214, 'return', '@return', 'total_intensity').
+annotation(127, 1, 215, 'return', '@return', 'pixel_count').
+annotation(128, 1, 234, 'end', '@end', 'transform_image').
 
 % FACT: annotation_qualifies(qualifying_annotation_id, primary_annotation_id).
 annotation_qualifies(2, 1).
@@ -165,7 +164,5 @@ annotation_qualifies(74, 73).
 annotation_qualifies(80, 79).
 annotation_qualifies(82, 81).
 annotation_qualifies(84, 83).
-annotation_qualifies(85, 83).
 annotation_qualifies(90, 89).
-annotation_qualifies(95, 94).
-annotation_qualifies(99, 98).
+annotation_qualifies(98, 97).
