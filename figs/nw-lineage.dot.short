@@ -1,4 +1,7 @@
 digraph dependency {
+    {rank=same v_1_58 v_1_59}
+    {rank=same v_1_43 v_1_44 v_1_57}
+
     rankdir=BT;
     node[fontsize=20]
     subgraph cluster_3  {
@@ -17,6 +20,11 @@ digraph dependency {
     v_1_58 [label="309 options = <Values at 0x7fe93a0beb70 ... ple_score_cutoff': 12.0}>" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
     v_1_59 [label="309 args = ['q55']" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
     subgraph cluster_13  {
+        {rank=same v_13_175 v_13_172 v_13_182 v_13_174}
+        {rank=same v_13_65 v_13_116 v_13_117}
+        {rank=same v_13_336 v_13_337 v_13_333}
+        {rank=same v_13_330 v_13_331}
+
         color="#3A85B9";
         fontsize=30;
         label = "simulate_data_collection";
