@@ -194,8 +194,20 @@ yn_process(TI,TN,YW_TN,TV) :-
 	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP),
 	TP="P".
 
+
+% yn_lin_ff: (SI,YW_SN,SV) --> (TI,YW_TN,TV)
+% SI: Source ID
+% YW_SN: Source Name provided by YW
+% SV: Source Value
+% TI: Target ID
+% YW_TN: Target Name provided by YW
+% TV: Target Value
+% 
 yn_lin_ff(SI,YW_SN,SV,TI,YW_TN,TV) :-
 	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP).
 
+
+out(X,Y) :- 
+	yn_lin_ff(X,_,_,Y,_,_).
 
 
