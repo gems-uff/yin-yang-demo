@@ -32,19 +32,8 @@ run_log [shape=record rankdir=LR label="{<f0> run_log |<f1> file\:run/run_log.tx
 collection_log [shape=record rankdir=LR label="{<f0> collection_log |<f1> file\:run/collected_images.csv}"];
 rejection_log [shape=record rankdir=LR label="{<f0> rejection_log |<f1> file\:run/rejected_samples.txt}"];
 sample_spreadsheet [shape=record rankdir=LR label="{<f0> sample_spreadsheet |<f1> file\:cassette_\{cassette_id\}_spreadsheet.csv}"];
-sample_name
-sample_quality
-rejected_sample
-accepted_sample
-energies
-sample_id
-energy
-frame_number
 raw_image [shape=record rankdir=LR label="{<f0> raw_image |<f1> file\:run/raw/\{cassette_id\}/\{sample_id\}/e\{energy\}/image_\{frame_number\}.raw}"];
 calibration_image [shape=record rankdir=LR label="{<f0> calibration_image |<f1> file\:calibration.img}"];
-corrected_image_path
-total_intensity
-pixel_count
 
 /* Style for nodes representing parameter channels in workflow */
 node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
@@ -53,7 +42,18 @@ node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname
 cassette_id
 sample_score_cutoff
 data_redundancy
+sample_name
+sample_quality
+rejected_sample
 num_images
+accepted_sample
+energies
+sample_id
+energy
+frame_number
+corrected_image_path
+total_intensity
+pixel_count
 
 /* Edges representing connections between programs and channels */
 initialize_run -> run_log

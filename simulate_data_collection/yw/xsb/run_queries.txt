@@ -65,7 +65,7 @@ yes
 ---------------------------------------------------------------------------------------------------------------------------
 mq1(SourceFile,StartLine,EndLine) - Where is the definition of block simulate_data_collection.collect_data_set?
 ---------------------------------------------------------------------------------------------------------------------------
-mq1(../simulate_data_collection.py,94,114)
+mq1(../simulate_data_collection.py,94,112)
 
 yes
 | ?- 
@@ -207,7 +207,6 @@ yes
 ---------------------------------------------------------------------------------------------------------------------------
 mq17(DownstreamDataName) - What data is downstream of accepted_sample?
 ---------------------------------------------------------------------------------------------------------------------------
-mq17(corrected_image_path)
 mq17(energy)
 mq17(total_intensity)
 mq17(pixel_count)
@@ -216,21 +215,22 @@ mq17(sample_id)
 mq17(corrected_image)
 mq17(collection_log)
 mq17(raw_image)
+mq17(corrected_image_path)
 
 yes
 | ?- 
 ---------------------------------------------------------------------------------------------------------------------------
 mq18(UpstreamDataName) - What data is upstream of raw_image?
 ---------------------------------------------------------------------------------------------------------------------------
-mq18(cassette_id)
-mq18(sample_quality)
-mq18(data_redundancy)
-mq18(num_images)
 mq18(energies)
 mq18(sample_score_cutoff)
 mq18(accepted_sample)
 mq18(sample_name)
 mq18(sample_spreadsheet)
+mq18(cassette_id)
+mq18(sample_quality)
+mq18(data_redundancy)
+mq18(num_images)
 
 yes
 | ?- 
@@ -299,4 +299,4 @@ rq5(q55)
 
 yes
 | ?- 
-End XSB (cputime 0.03 secs, elapsetime 0.02 secs)
+End XSB (cputime 0.02 secs, elapsetime 0.02 secs)

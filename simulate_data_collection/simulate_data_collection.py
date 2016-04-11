@@ -63,8 +63,8 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
             @begin calculate_strategy @desc Reject unsuitable crystals and compute \n best data sets to collect for accepted crystals.
             @param sample_score_cutoff
             @param data_redundancy
-            @in sample_name
-            @in sample_quality
+            @param sample_name
+            @param sample_quality
             @out accepted_sample
             @out rejected_sample
             @out num_images
@@ -78,7 +78,7 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
             """
             @begin log_rejected_sample @desc Record which samples were rejected.
             @param cassette_id
-            @in rejected_sample
+            @param rejected_sample
             @out rejection_log @uri file:run/rejected_samples.txt
             """
             if (rejected_sample is not None):
@@ -95,8 +95,8 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
             @call collect_next_image
             @param cassette_id
             @param num_images
-            @in accepted_sample
-            @in energies
+            @param accepted_sample
+            @param energies
             @out sample_id      @desc The crystal that the diffraction image was collected from.
             @out energy         @desc Energy (in eV) at which the diffraction image was collected.
             @out frame_number   @desc Index of diffraction image within data set.
@@ -115,12 +115,12 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
                 """
                 @begin transform_images @desc Correct raw image using the detector calibration image.
                 @call transform_image
-                @in sample_id
-                @in energy
-                @in frame_number
+                @param sample_id
+                @param energy
+                @param frame_number
                 @in raw_image_path @as raw_image
                 @in calibration_image @uri file:calibration.img
-                @out corrected_image  @uri file:run/data/{sample_id}/{sample_id}_{energy}eV_{frame_number}.img
+                @out corrected_image @uri file:run/data/{sample_id}/{sample_id}_{energy}eV_{frame_number}.img
                 @out corrected_image_path
                 @out total_intensity
                 @out pixel_count
@@ -137,9 +137,9 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
                 @param cassette_id
                 @param sample_id
                 @param frame_number
-                @in corrected_image_path
-                @in total_intensity
-                @in pixel_count
+                @param corrected_image_path
+                @param total_intensity
+                @param pixel_count
                 @out collection_log @uri file:run/collected_images.csv
                 """
                 average_intensity = total_intensity / pixel_count
