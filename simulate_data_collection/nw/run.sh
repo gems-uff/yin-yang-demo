@@ -8,7 +8,8 @@ now run -e Tracer -d 2 simulate_data_collection.py q55 --cutoff 12 --redundancy 
 now export -r > nw/kb-nw.pl
 
 # Create dataflow
-now dataflow | dot -Tpng -o nw/nw-dataflow.png
+now dataflow > nw/nw-dataflow.dot
+dot nw/nw-dataflow.dot -Tpng -o nw/nw-dataflow.png
 
 cd nw
 jupyter nbconvert dataflow.ipynb --to python
