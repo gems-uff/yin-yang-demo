@@ -1,5 +1,5 @@
 digraph dependency {
-    rankdir=RL;
+    rankdir=RL
     node[fontsize=20]
     subgraph cluster_3  {
         color="#3A85B9";
