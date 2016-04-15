@@ -29,7 +29,7 @@ The input is qualified by a @uri tag that speficies that *sample_spreadsheet* co
   ```
 
 1. Open `xsb` on [yw/xsb](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/yw/xsb) directory.
-   Load [xsb](https://github.com/gems-uff/yin-yang-demo/blob/master/simulate_data_collection/yw/xsb/rules.P), [extractfacts.P](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/yw/xsb/extractfacts.P), and [modelfacts.P](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/yw/xsb/modelfacts.P):
+   Load [rules.P](https://github.com/gems-uff/yin-yang-demo/blob/master/simulate_data_collection/yw/xsb/rules.P), [extractfacts.P](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/yw/xsb/extractfacts.P), and [modelfacts.P](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/yw/xsb/modelfacts.P):
 
   ```prolog
   [rules].
@@ -80,7 +80,7 @@ The input is qualified by a @uri tag that speficies that *sample_spreadsheet* co
 
   Note that [run/data/DRT322/DRT322_11000eV_002.img](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/run/data/DRT322/DRT322_11000eV_002.img) were opened on a __init__ function, called by transform_image, called by the simulation_data_collection script itself.
 
-1. Run `now export -r > nw/kb.pl` to export NW provenance to prolog.
+1. Run `now export -r -m dependency > nw/kb.pl` to export NW provenance to prolog.
 
 1. Navigate to [nw](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/nw) directory and load *kb.pl* on swipl: `swipl -s kb.pl`. Run the following prospective queries:
 
@@ -102,7 +102,7 @@ The input is qualified by a @uri tag that speficies that *sample_spreadsheet* co
       subtract(TopLevelFunctions, Calls, Result).
       ```
 
-1. Run `yw recon`, open [reconfacts.P](https://github.com/gems-uff/yin-yang-demo/blob/master/simulate_data_collection/yw/xsb/reconfacts.P).
+1. Run `yw recon` on [yw](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection/yw) directory, open [reconfacts.P](https://github.com/gems-uff/yin-yang-demo/blob/master/simulate_data_collection/yw/xsb/reconfacts.P).
 
   The *resource* facts indicate files found after the execution, and the *data_resource* facts connect the resource facts to prospective data:
 
@@ -161,11 +161,11 @@ The input is qualified by a @uri tag that speficies that *sample_spreadsheet* co
     maplist(var_name(_), CalculateStrategyReturns, Result).
     ```
 
-1. Generate a NW dataflow. Graphviz is not able to produce a graph with all variables captured by noWorkflow on depth 3. So instead of just producing the dataflow, run noWorkflow again with the collection limited to depth 2; then export the dataflow to png:
+1. Generate a NW dataflow. Graphviz is not able to produce a graph with all variables captured by noWorkflow on depth 3. So instead of just producing the dataflow, go back to [simulate_data_collection](https://github.com/gems-uff/yin-yang-demo/blob/after_run/simulate_data_collection) directory, and run noWorkflow again with the collection limited to depth 2; then export the dataflow to png:
 
   ```
   now run -e Tracer -d 2 simulate_data_collection.py q55 --cutoff 12 --redundancy 0
-  now dataflow | dot -Tpng -o nw-dataflow.png
+  now dataflow | dot -Tpng -o nw/nw-dataflow.png
   ```
 
   The dataflow contains lots of details about functions that were called, variables and files, as shown below.
