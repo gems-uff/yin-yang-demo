@@ -1,0 +1,84 @@
+digraph dependency {
+    rankdir=BT;
+    node[fontsize=20]
+    subgraph cluster_3  {
+        color="#3A85B9";
+        fontsize=30;
+        label = "module.__build_class__";
+    }
+    subgraph cluster_5  {
+        color="#3A85B9";
+        fontsize=30;
+        label = "module.__build_class__";
+    }
+    v_1_43 [label="293 __init__ = None" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+    v_1_44 [label="293 parser = <optparse.OptionParser object at 0x7f66ed33d4a8>" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+    v_1_57 [label="309 parse_args = (<Values at 0x7f66ed9396a ... cutoff': 12.0}>, ['q55'])" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+    v_1_58 [label="309 args = ['q55']" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+    v_1_59 [label="309 options = <Values at 0x7f66ed9396a0 ... ple_score_cutoff': 12.0}>" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+    subgraph cluster_13  {
+        color="#3A85B9";
+        fontsize=30;
+        label = "simulate_data_collection";
+        v_13_65 [label="29 cassette_id = 'q55'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_66 [label="29 sample_score_cutoff = 12.0" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_67 [label="29 data_redundancy = 0.0" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_65 [label="29 cassette_id = 'q55'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_66 [label="29 sample_score_cutoff = 12.0" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_67 [label="29 data_redundancy = 0.0" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_116 [label="55 str.format" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+        v_13_117 [label="55 sample_spreadsheet = 'cassette_q55_spreadsheet.csv'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_121 [label="56 spreadsheet_rows(sample_spreadsheet)" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+        v_13_167 [label="56 sample_name = 'DRT240'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_168 [label="56 sample_quality = 45" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_171 [label="73 calculate_strategy = ('DRT240', None, 2, [10000, 11000, 12000])" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+        v_13_172 [label="73 energies = [10000, 11000, 12000]" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_174 [label="73 accepted_sample = 'DRT240'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_175 [label="73 num_images = 2" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_182 [label="108 sample_id = 'DRT240'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_187 [label="109 collect_next_image(casset ... _{frame_number:03d}.raw')" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+        v_13_330 [label="109 energy = 11000" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_331 [label="109 frame_number = 2" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_333 [label="109 raw_image_path = 'run/raw/q55/DRT240/e11000/image_002.raw'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_336 [label="128 str.format" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+        v_13_337 [label="128 corrected_image_path = 'run/data/DRT240/DRT240_11000eV_002.img'" fillcolor="#85CBD0" fontcolor="black" shape="box" style="rounded,filled"];
+        v_13_340 [label="129 transform_image = (980, 10)" fillcolor="#3A85B9" fontcolor="black" shape="box" style="filled"];
+    }
+    a_8 [label="calibration.img" fillcolor="white" fontcolor="black" shape="box" style="rounded,filled"];
+    a_24 [label="run/data/DRT240/DRT240_11000eV_002.img" fillcolor="white" fontcolor="black" shape="box" style="rounded,filled"];
+    v_13_340 -> v_13_333 [style="dashed"];
+    v_1_59 -> v_1_57 [style=""];
+    v_1_44 -> v_1_43 [style=""];
+    a_24 -> v_13_340 [style="dashed"];
+    v_13_187 -> v_13_172 [style="dashed"];
+    v_13_171 -> v_13_167 [style="dashed"];
+    v_13_171 -> v_13_66 [style="dashed"];
+    v_13_333 -> v_13_187 [style=""];
+    v_13_336 -> v_13_330 [style="dashed"];
+    v_13_66 -> v_1_59 [style=""];
+    v_13_65 -> v_1_58 [style=""];
+    v_13_168 -> v_13_121 [style=""];
+    v_13_182 -> v_13_174 [style=""];
+    v_13_174 -> v_13_171 [style=""];
+    v_13_167 -> v_13_121 [style=""];
+    v_13_117 -> v_13_116 [style=""];
+    v_13_175 -> v_13_171 [style=""];
+    v_13_336 -> v_13_182 [style="dashed"];
+    v_13_337 -> v_13_336 [style=""];
+    v_13_340 -> a_8 [style="dashed"];
+    v_13_340 -> v_13_337 [style="dashed"];
+    v_13_121 -> v_13_117 [style="dashed"];
+    v_13_187 -> v_13_182 [style="dashed"];
+    v_13_171 -> v_13_168 [style="dashed"];
+    v_13_171 -> v_13_67 [style="dashed"];
+    v_13_331 -> v_13_187 [style=""];
+    v_1_58 -> v_1_57 [style=""];
+    v_13_187 -> v_13_65 [style="dashed"];
+    v_13_330 -> v_13_187 [style=""];
+    v_1_57 -> v_1_44 [style="dashed"];
+    v_13_67 -> v_1_59 [style=""];
+    v_13_116 -> v_13_65 [style="dashed"];
+    v_13_187 -> v_13_175 [style="dashed"];
+    v_13_336 -> v_13_331 [style="dashed"];
+    v_13_172 -> v_13_171 [style=""];
+}
