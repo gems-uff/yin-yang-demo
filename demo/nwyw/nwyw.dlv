@@ -1,22 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% File Name: YW+NW System
+% File Name: NW*YW System
 %
 % Author: Saumen Dey
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%
-% YW Data Id X has name Y
-%%
-yw_data(X,Y) :-
-	data(X,Y,_).
-	
-%%
-% Process Id X has name Y
-%%
-yw_process(X,Y) :-
-	program(X,Y,_,_,_).	
 
 %%
 % Data map between YW and NW Link. X is the YW Data Name  
@@ -24,10 +12,16 @@ yw_process(X,Y) :-
 % Note: YW port maintains the NW data name (TBD: further details
 % to be added)
 %%
+yw_data_id(X) :-
+	data(X,_,_).
+	
 ynw_data(X,Y) :-
   port(_,_,Y,_,_,XI),
   data(XI,X,_).
-
+ynw_data(Y,Y) :-
+  port(_,_,Y,_,_,XI),
+  not yw_data_id(XI).
+  
 %%
 % Note: similar connection between YW annotated process name
 %       to NW process name is not captured by YW as of now.
@@ -38,176 +32,281 @@ ynw_data(X,Y) :-
 % are same for both YW and NW.
 %%
 ynw_process(Y,Y) :-
-	yw_process(_,Y).
+	program(_,Y,_,_,_).
 	
-%%
-%
-% Capture the list of data and process that user is interested about
-% it is assumed that all annotated data and process are of interest.
-%
-%%
-node_int(X,Y,Type) :-
-	ynw_data(X,Y), Type="D".
-node_int(X,Y,Type) :-
-	ynw_process(X,Y), Type="P".
 	
-
-
 %%
 % Program/Block Name (i.e., process) X depends on Input 
 % data Name Y (this is YW data name)
 %%
 yw_dep(X,Y) :-
-	yw_process(X1,X),
+	program(X1,X,_,_,_),
 	has_in_port(X1,P),
-	port(P,_,_,_,_,Y1),
-	data(Y1,Y,_).
+	port(P,_,Y,_,_,Y1).
+	%data(Y1,_,_).
 
 %%
 % Output data name X (YW data names) depsnds on Program/Block (i.e., 
 % process) Id Y
 %%
 yw_dep(X,Y) :-
-	yw_process(Y1,Y),
+	program(Y1,Y,_,_,_),
 	has_out_port(Y1,P),
-	port(P,_,_,_,_,X1),
-	data(X1,X,_).
+	port(P,_,X,_,_,X1),
+	data(X1,_,_).
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%    NW   %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%%%
 %
-% Find all the user defined variables
-% TrialId, ActivationId, VariableId, Id, Name, Line
+% Get all the argument values for all the processes
 %
-nw_variable(T,N) :- usage(T,_,_,_,N,_).
+%%%
 
 %
-% Find all the processes
-% TrialId, Id, Name, Start, Finish, CallerActivationId
-% 
-nw_process(T,N) :- activation(T,_,N,_,_,_).
-
-
+% io_arg(TrialId,Invocation_Id, Argument_Id, Argument_Name, Argument_Value,ProcessName)
 %
-% All nodes - data and process
-% 
-nw_node(T,X) :- nw_variable(T,X).
-nw_node(T,X) :- nw_process(T,X).
+nw_in(TrialId,ActivationId, Id, Name, Value,ProcessName) :-
+	object_value(TrialId, ActivationId, Id, Name, Value, Type),
+	Type="ARGUMENT",
+	activation(TrialId, ActivationId, ProcessName, Start, Finish, _),
+	program(_, ProcessName, _, _, _).
 
+nw_in_arg(ActivationId, Argument_Name, Argument_Value) :-
+	nw_in(_, ActivationId, _, Argument_Name, Argument_Value, _).
+
+%%%
 %
-% Dep
-% variable(TrialId, ActivationId, Id, Name, Line, Value, Timestamp)
+% Get all the files wtitten by all the processes
 %
-nw_dep(T,SI,SN,SV,TI,TN,TV) :-
+%%%
+	
+nw_tc_act(Id,CallerActivationId) :-
+	activation(TrialId, Id, ProcessName, _, _, CallerActivationId).
+nw_tc_act(Id,SecondaryCallerActivationId) :-
+	activation(TrialId, CallerActivationId, ProcessName, _, _, SecondaryCallerActivationId),
+	nw_tc_act(Id,CallerActivationId).
+
+nw_out(TrialId,FileName,ProcessName,ActivationId,CallerActivationId) :-
+	activation(TrialId, CallerActivationId, ProcessName, _, _, _),
+	program(_, ProcessName, _, _, _),
+	nw_tc_act(ActivationId,CallerActivationId),
+	access(TrialId, _, FileName, Mode, _, _, _, ActivationId),
+	Mode="wt".
+
+nw_process(ActivationId,ProcessName) :-
+	nw_in(_, ActivationId, _, _, _,ProcessName).
+nw_process(CallerActivationId,ProcessName) :-
+	nw_out(_, _, ProcessName, _, CallerActivationId).
+
+nw_data(Argument_Name) :-
+	nw_in(_, _, _, Argument_Name, _, _).
+ 
+%%%
+%
+% Process to Argument Dep
+%
+%%%
+nw_dep_init(TrialId,nw_process(ActivationId,ProcessName),ProcessName,ProcessName,Argument_Name,Argument_Name,Argument_Value) :-
+	nw_in(TrialId,ActivationId, Id, Argument_Name, Argument_Value,ProcessName).
+
+%%%
+%
+% output file to process Dep
+%
+%%%
+nw_dep_init(TrialId,Argument_Value,Argument_Value,Argument_Value,nw_process(CallerActivationId,ProcessName),ProcessName,ProcessName) :-
+	nw_out(TrialId,Argument_Value,ProcessName,ActivationId,CallerActivationId).
+	
+%%%	
+%
+% Dep based on the variable and dependency
+%
+%%%
+nw_dep_init(T,SI,SN,SV,TI,TN,TV) :-
 	dependency(T,_,_,SI,_,TI),
 	variable(T,TAI,TI,TN,TL,TV,_), 
 	variable(T,SAI,SI,SN,SL,SV,_).
 
-%nw_dep(T,SI,SN,SV,TI,TN,TV) ?
-
-nw_lin(T,SI,SN,SV,TI,TN,TV) :-
-	nw_dep(T,SI,SN,SV,TI,TN,TV),
+nw_lin_init(T,SI,SN,SV,TI,TN,TV) :-
+	nw_dep_init(T,SI,SN,SV,TI,TN,TV),
 	qryL(SV).
+nw_lin_init(T,SI,SN,SV,TI,TN,TV) :-
+	nw_dep_init(T,SI,SN,SV,TI,TN,TV),
+	nw_lin_init(_,_,_,_,SI,_,_).
+
+nw_lin_dup(T,SI,SN,SV,TI,TN,TV) :-
+	nw_lin_init(T,SI,SN,SV,TI,TN,TV),
+	SN=TN, SV=TV.
+	
+nw_lin_rm(T,SI,SN,SV,TI,TN,TV) :-
+	nw_lin_dup(T,SI,SN,SV,TI,TN,TV).
+nw_lin_rm(T,SI,SN,SV,TI,TN,TV) :-
+	nw_lin_init(T,SI,SN,SV,TI,TN,TV),
+	nw_lin_dup(T,_,_,_,SI,SN,SV).
+	
 nw_lin(T,SI,SN,SV,TI,TN,TV) :-
-	nw_dep(T,SI,SN,SV,TI,TN,TV),
-	nw_lin(_,_,_,_,SI,_,_).
+	nw_lin_init(T,SI,SN,SV,TI,TN,TV),
+	not nw_lin_rm(T,SI,SN,SV,TI,TN,TV).
+nw_lin(T,SI,SN,SV,TI,TN,TV) :-
+	nw_lin_init(T,TI1,TN1,TV1,TI,TN,TV),
+	nw_lin_dup(T,SI,SN,SV,TI1,TN1,TV1).
 
-%nw_lin(T,SI,SN,SV,TI,TN,TV) ?
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%    YW+NW   %%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-yn_dep(SI,TI) :-
+nw_dep(SI,TI) :-
 	nw_lin(_,SI,_,_,TI,_,_).
 
-yn_tc(SI,TI) :- 
-	yn_dep(SI,TI).
-yn_tc(SI,TI) :- 
-	yn_tc(SI,TS), 
-	yn_dep(TS,TI).
+% D --> Direct Dep
+% I --> Indirect/transitive dep
+nw_tc(SI,TI,DT) :- 
+	nw_dep(SI,TI), DT="D".
+nw_tc(SI,TI,DT) :- 
+	nw_tc(SI,TS,_), 
+	nw_dep(TS,TI),
+	DT="I".
 
-yn_potential_dep(SI,TI) :- 
-	yn_tc(SI,TI),
-	node_int(_,SN,_),
-	nw_lin(_,SI,SN,_,_,_,_),
-	node_int(_,TN,_),
-	nw_lin(_,_,_,_,TI,TN,_).
+nw_node(SI,SN,SV) :-
+	nw_lin(_,SI,SN,SV,_,_,_).
+nw_node(TI,TN,TV) :-
+	nw_lin(_,_,_,_,TI,TN,TV).
+
+nw_node_name(X) :-
+	nw_node(_,X,_).
+	
+% Find the YW edges in NW and grab the 
+% values
+yn_dep(SI,SN,SV,TI,TN,TV) :-
+	yw_dep(SN,TN),
+	nw_tc(SI,TI,_),
+	nw_node(SI,SN,SV),
+	nw_node(TI,TN,TV).
+	
+%%
+% Add the missing ones...
+%%
+yn_dep_name(SN,TN) :-
+	yn_dep(SI,SN,SV,TI,TN,TV).
+	
+yw_dep_not_in_nw(SN,TN) :-
+	yw_dep(SN,TN),
+	not yn_dep_name(SN,TN).
+
+nw_node_new(I,N,V) :-
+	ynw_process(_,N),
+	I="No ID",
+	V="No Value",
+	not nw_node_name(N).
+
+nw_node_all(I,N,V) :-
+	nw_node(I,N,V).
+nw_node_all(I,N,V) :-
+	nw_node_new(I,N,V).
+	
+yw_dep_in_nw_via_node(SI,SN,SV,TI,TN,TV) :-
+	yw_dep_not_in_nw(SN,TN),
+	nw_node_all(SI,SN,SV),
+	nw_node_all(TI,TN,TV).
+
+yn_dep_all(SI,SN,SV,TI,TN,TV) :-
+	yn_dep(SI,SN,SV,TI,TN,TV).
+yn_dep_all(SI,SN,SV,TI,TN,TV) :-
+	yw_dep_in_nw_via_node(SI,SN,SV,TI,TN,TV).
+
+
+%%	
+%
+% A data could be 
+% (a) initial input
+% (b) intermediate
+% (c) final output
+%
+%%
+data_in(N) :- 
+	port(_, "param", N, _, _, _).
+data_in(N) :- 
+	port(_, "in", N, _, _, _).
+	
+data_out(N) :-
+	port(_, "out", N, _, _, _).
+
+data_in_out(N) :-
+	data_in(N),
+	data_out(N).
 
 %%
-%
-% Naive Transitive Reduction
-%
-% TI1,TI2 --> 2879, 428
-% SI,TI2  --> 2890, 428
-% SI,TI1  --> 2890, 2879
-% ==> 
-% SI,TI2 is not needed as it is tc derivable
+% find nw data with only one leg
 %%
-yn_tcExists(SI,TI2) :- 
-	yn_potential_dep(SI,TI1), 
-	yn_potential_dep(SI,TI2),
-	yn_potential_dep(TI1,TI2), 
-	SI != TI2, SI != TI1, TI1 != TI2.
-                 
-yn_new_dep(SI,TI) :-  
-	yn_potential_dep(SI,TI), 
-	not yn_tcExists(SI,TI).   
+nw_source_data(I,N):-
+	yn_dep_all(I,N,_,_,_,_).
 
-yn_lin(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP) :-
-	nw_lin(T,SI,SN,SV,_,_,_),
-	node_int(YW_SN,SN,SP),
-	nw_lin(T,_,_,_,TI,TN,TV),
-	node_int(YW_TN,TN,TP),
-	yn_new_dep(SI,TI).
+nw_target_data(I,N):-
+	yn_dep_all(_,_,_,I,N,_).
+	
+nw_data_with_one_leg(I,N) :-
+	nw_source_data(I,N),
+	not nw_target_data(I,N).
+nw_data_with_one_leg(I,N) :-
+	nw_target_data(I,N),
+	not nw_source_data(I,N).	
 
-yn_self_lin(SN,SV,TN,TV) :-
-	yn_lin(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP),
-	SN=TN, SV=TV.
+%%
+% find nw data with one leg which yw 
+% expected to have both
+%%
+nw_data_with_conflict(I,N) :-
+	data_in_out(N),
+	nw_data_with_one_leg(I,N).
 
+%%
+% dep with conflicting data
+%%
+yn_dep_conflict(SI,SN,SV,TI,TN,TV) :-
+	yn_dep_all(SI,SN,SV,TI,TN,TV),
+	nw_data_with_conflict(SI,SN).
+yn_dep_conflict(SI,SN,SV,TI,TN,TV) :-
+	yn_dep_all(SI,SN,SV,TI,TN,TV),
+	nw_data_with_conflict(TI,TN).
+
+%%
+% Exclude the conflicting edges
+%%
+yn_dep_all_f(SI,SN,SV,TI,TN,TV) :-
+	yn_dep_all(SI,SN,SV,TI,TN,TV),
+	not yn_dep_conflict(SI,SN,SV,TI,TN,TV).
+	
+%%	
 %
-% 1. some other uppper level nodes may depend on target 
-% needs to be modified to source.
-% 2. also, because of TR some of the arguments are missing
+% Some processes were not invoked in this lineage
+% so execulde them
 %
+%%
+yw_process_with_in_out(PI,PN) :-
+	ynw_process(_,PN),
+	yn_dep_all_f(_,_,_,PI,PN,_),
+	yn_dep_all_f(PI,PN,_,_,_,_).
 
+% Final Output
 
-yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP) :-
-	yn_lin(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP).
-	%not yn_self_lin(SN,SV,TN,TV).
+yn_dep_out(SI,SN,SV,TI,TN,TV) :-
+	yn_dep_all_f(SI,SN,SV,TI,TN,TV),
+	yw_process_with_in_out(SI,SN).
+yn_dep_out(SI,SN,SV,TI,TN,TV) :-
+	yn_dep_all_f(SI,SN,SV,TI,TN,TV),
+	yw_process_with_in_out(TI,TN).
+	
+yn_data_out(SI,SN,SV) :-
+	yn_dep_out(SI,SN,SV,_,_,_),
+	ynw_data(_,SN).
+yn_data_out(TI,TN,TV) :-
+	yn_dep_out(_,_,_,TI,TN,TV),
+	ynw_data(_,TN).
 
-
-yn_data(SI,SN,YW_SN,SV) :-
-	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP),
-	SP="D".
-yn_data(TI,TN,YW_TN,TV) :-
-	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP),
-	TP="D".
-
-yn_process(SI,SN,YW_SN,SV) :-
-	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP),
-	SP="P".
-yn_process(TI,TN,YW_TN,TV) :-
-	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP),
-	TP="P".
-
-
-% yn_lin_ff: (SI,YW_SN,SV) --> (TI,YW_TN,TV)
-% SI: Source ID
-% YW_SN: Source Name provided by YW
-% SV: Source Value
-% TI: Target ID
-% YW_TN: Target Name provided by YW
-% TV: Target Value
-% 
-yn_lin_ff(SI,YW_SN,SV,TI,YW_TN,TV) :-
-	yn_lin_f(SI,SN,YW_SN,SV,TI,TN,YW_TN,TV,SP,TP).
-
-
-out(X,Y) :- 
-	yn_lin_ff(X,_,_,Y,_,_).
-
-
+yn_process_out(SI,SN,SV) :-
+	yn_dep_out(SI,SN,SV,_,_,_),
+	ynw_process(_,SN).
+yn_process_out(TI,TN,TV) :-
+	yn_dep_out(_,_,_,TI,TN,TV),
+	ynw_process(_,TN).
