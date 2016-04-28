@@ -188,3 +188,5 @@ depends_on(R1, R2) :-
     not common_metadata_values_differ(R1, R2),
     resource_downstream(R1, R2),
     R1 \== R2.
+
+function('').

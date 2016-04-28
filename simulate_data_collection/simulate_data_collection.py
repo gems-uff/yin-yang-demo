@@ -154,17 +154,7 @@ def simulate_data_collection(cassette_id, sample_score_cutoff, data_redundancy):
     @end simulate_data_collection
     """
 
-"""
-@begin calculate_strategy
-@param sample_name
-@param sample_quality
-@param sample_score_cutoff
-@param data_redundancy
-@return accepted_sample
-@return rejected_sample
-@return num_images
-@return energies
-"""
+
 def calculate_strategy(sample_name, sample_quality, sample_score_cutoff, data_redundancy):
     if sample_quality >= sample_score_cutoff:
         accepted_sample = sample_name
@@ -178,22 +168,8 @@ def calculate_strategy(sample_name, sample_quality, sample_score_cutoff, data_re
         num_images = 0
         energies = []
     return accepted_sample, rejected_sample, num_images, energies
-"""
-@end calculate_strategy
-"""
 
-"""
-@begin collect_next_image
-@param cassette_id
-@param sample_id
-@param num_images
-@param energies
-@param image_path_template
-@return energy
-@return frame_number
-@return intensity
-@return raw_image_path
-"""
+
 def collect_next_image(cassette_id, sample_id, num_images, energies, image_path_template):
     for energy in energies:
         for frame_number in range(1, num_images + 1):
@@ -202,18 +178,8 @@ def collect_next_image(cassette_id, sample_id, num_images, energies, image_path_
                 intensity = int(math.floor(math.floor(energy / (frame_number + 1)) % math.sqrt(energy)))
                 raw_image.write_values(10 * [intensity])
             yield energy, frame_number, intensity, raw_image_path
-"""
-@end collect_next_image
-"""
 
-"""
-@begin transform_image
-@param raw_image_path
-@param corrected_image_path
-@param calibration_image_path
-@return total_intensity
-@return pixel_count
-"""
+
 def transform_image(raw_image_path, corrected_image_path, calibration_image_path):
 
     with open(raw_image_path, 'rt') as raw_image, open(calibration_image_path, 'rt') as calibration_image, new_image_file(corrected_image_path) as corrected_image:
@@ -230,9 +196,7 @@ def transform_image(raw_image_path, corrected_image_path, calibration_image_path
             pixel_count += 1
 
     return total_intensity, pixel_count
-"""
-@end transform_image
-"""
+
 
 def spreadsheet_rows(spreadsheet_file_name):
     with open(spreadsheet_file_name, 'rt') as screening_results:
