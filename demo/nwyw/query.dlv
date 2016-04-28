@@ -5,17 +5,29 @@
 % Author: Saumen Dey
 %
 % README: 
-% 1. yn_lin_ff: captured the lineage of the object 
+% qryL/1 predite allows users to specify for which node 
+% backward lineage (i.e., dependency) should be extracted.
+% 
+% If the following DLV statement is run, the model would have the 
+% following three predicate, which capture the lineage "sub-graph"
+% for the node specified in qryL/1 by overlaying the NW values 
+% on the YW graph.
+% 
+% 1. yn_dep_out: captured the lineage of the object 
 %               name provided in the qryL predicate.
-% 2. yn_data: captured the list of data items used 
+% 2. yn_data_out: captured the list of data items used 
 %             in the lineage.
-% 3. yn_process: captured the list of processes items 
+% 3. yn_process_out: captured the list of processes items 
 %                used in the lineage.
 %
 % Query to execute: 
-% dlv -silent -filter=yn_lin_ff -filter=yn_data -filter=yn_process nwyw.dlv nw_facts.dlv nwyw_supp.dlv yw_facts.dlv query.dlv > out.txt
+% dlv -silent -filter=yn_dep_out,yn_data_out,yn_process_out nwyw.dlv nw_facts.dlv yw_facts.dlv query.dlv > out.txt
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 qryL("run/data/DRT240/DRT240_11000eV_002.img").
+%qryL("run/data/DRT240/DRT240_12000eV_001.img").
+%qryL("run/data/DRT240/DRT240_12000eV_002.img").
+%qryL("run/data/DRT322/DRT322_10000eV_001.img").
+
 
